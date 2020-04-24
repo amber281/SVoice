@@ -1,0 +1,13 @@
+**/.gradle
+**/gradle
+**/.idea
+**/gradle.properties
+**/*.iml
+**/build
+**/build/**
+**/gradlew
+**/gradlew.bat
+**/local.properties
+**/*.pro
+**/.git
+**/README.md

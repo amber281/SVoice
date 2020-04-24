@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dee9f7"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/borderstyle1"
+        android:gravity="bottom">
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:columnCount="3"
+            android:rowCount="1">
+
+            <EditText
+                android:id="@+id/gpcode_edit"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="1.8"
+                android:layout_gravity="bottom"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/add_btn"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="0.1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/buttonstyle1"
+                android:text="新增监控" />
+
+            <Button
+                android:id="@+id/setting_btn"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="0.1"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/buttonstyle1"
+                android:text="设置时间" />
+        </GridLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+</LinearLayout>

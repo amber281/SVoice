@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:background="@drawable/buttonstyle1"
+        android:id="@+id/setting"
+        android:title="设置" />
+    <item
+        android:background="@drawable/buttonstyle1"
+        android:id="@+id/exit"
+        android:title="退出" />
+</menu>
