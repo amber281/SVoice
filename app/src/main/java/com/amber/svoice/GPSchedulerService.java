@@ -38,6 +38,7 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
      */
     private int dataSource = 0;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -140,7 +141,8 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
             default:
                 throw new IllegalStateException("Unexpected DataSource: " + dataSource);
         }
-        while (mTextToSpeech.isSpeaking()){}
+        while (mTextToSpeech.isSpeaking()) {
+        }
         if (message != null && mTextToSpeech != null) {
             // 设置音调，值越大声音越尖（女生），值越小则变成男声,1.0是常规
             mTextToSpeech.setPitch(1f);
@@ -149,6 +151,7 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
             mTextToSpeech.speak(message, TextToSpeech.QUEUE_FLUSH, null, "speech");
         }
     }
+
 
     private JobInfo getJobInfo() {
         SharedPreferences sharedPreferences = getSharedPreferences("time", Activity.MODE_PRIVATE);

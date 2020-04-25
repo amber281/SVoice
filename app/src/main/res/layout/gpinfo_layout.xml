@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="10dp"
-    android:background="@drawable/borderstyle1"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom">
+    android:layout_height="50dp"
+    android:background="@drawable/borderstyle1"
+    android:columnCount="3"
+    android:gravity="bottom"
+    android:padding="5dp"
+    android:rowCount="1">
 
     <TextView
         android:id="@+id/name_text"
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_height="match_parent"
+        android:layout_columnWeight="2"
+        android:layout_gravity="center"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/code_text"
-        android:layout_width="135dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_height="match_parent"
+        android:layout_width="150dp"
+        android:layout_gravity="left"
+        android:gravity="center" />
 
     <Button
         android:id="@+id/remove_btn"
-        android:background="@drawable/buttonstyle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="bottom"
+        android:background="@drawable/buttonstyle1"
         android:text="取消" />
-</LinearLayout>
+</GridLayout>
