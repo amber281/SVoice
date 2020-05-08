@@ -1,5 +1,6 @@
 package com.amber.svoice;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.job.JobInfo;
 import android.app.job.JobParameters;
@@ -10,6 +11,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
+import android.os.PowerManager;
+import android.provider.SyncStateContract;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -31,12 +34,16 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
     private TextToSpeech mTextToSpeech;
     private IRequestGPData requestGPData;
     private SQLiteAssist sqLiteAssist;
+
+
     /**
      * 数据来源
      * 0：新浪
      * 1：东方财富
      */
     private int dataSource = 0;
+
+    private PowerManager.WakeLock mWakelock;
 
 
     @Override
@@ -48,6 +55,7 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
         sqLiteAssist = new SQLiteAssist(new WeakReference<>(this).get());
         requestGPData = new EastmoneyImpl(new WeakReference<>(this).get(), this);
         requestGPData = new SinaImpl(new WeakReference<>(this).get(), this);
+
         mTextToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -73,11 +81,15 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
             public void onError(String s) {
             }
         });
+
+        PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
+        mWakelock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "GPSchedulerService:WakeLock");
     }
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         Log.i(TAG, "--------------------------------------------------------------------------------------------------");
+        mWakelock.acquire(1000);
         Cursor cursor = sqLiteAssist.query(new String[]{SQLiteAssist.COLUMN_2}, null, null, null);
         while (cursor.moveToNext()) {
             String code = cursor.getString(0);
@@ -114,6 +126,10 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
         if (sqLiteAssist != null) {
             sqLiteAssist = null;
         }
+        if (mWakelock != null) {
+            mWakelock.release();
+            mWakelock = null;
+        }
     }
 
     @Override
@@ -142,6 +158,10 @@ public class GPSchedulerService extends JobService implements IHandleGPData {
                 throw new IllegalStateException("Unexpected DataSource: " + dataSource);
         }
         while (mTextToSpeech.isSpeaking()) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+            }
         }
         if (message != null && mTextToSpeech != null) {
             // 设置音调，值越大声音越尖（女生），值越小则变成男声,1.0是常规
